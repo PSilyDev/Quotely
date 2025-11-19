@@ -3,49 +3,68 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import './Card.css';
 
 function Card({ quoteData, onNext, onPrev }) {
-  if (!quoteData) {
-    return <div>Loading...</div>;
-  }
+  const isLoading = !quoteData;
+
+  // Safe fallbacks
+  const authorName = !isLoading && quoteData.author ? quoteData.author : 'Unknown';
+  const genre = !isLoading && quoteData.genre ? quoteData.genre : 'General';
+  const text = !isLoading && quoteData.text ? quoteData.text : '';
 
   const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-    quoteData.author || "Unknown"
+    authorName
   )}&background=random&size=128&bold=true`;
 
-  const avatarSrc = quoteData.image ? quoteData.image : fallbackAvatar;
-
-  const authorName = quoteData.author || "Unknown";
+  const avatarSrc = !isLoading && quoteData.image ? quoteData.image : fallbackAvatar;
 
   return (
     <div className="card_parent">
-      <div className="left_button" onClick={onPrev} style={{ cursor: "pointer" }}>
+      <div className="left_button" onClick={onPrev} style={{ cursor: 'pointer' }}>
         <FontAwesomeIcon icon={faChevronLeft} size="3x" />
       </div>
 
-      <div className="card_rectangle">
+      <div className="card_rectangle" aria-busy={isLoading}>
         <div className="card_content">
+          {/* Genre pill */}
           <div className="genre_button">
             <div className="genre_frame">
-              {/* <text> is not valid HTML, use span */}
-              <span>{quoteData.genre || "General"}</span>
+              <span>{genre}</span>
             </div>
           </div>
 
+          {/* Quote area */}
           <div className="card_frame">
-            {/* long quotes stay inside via CSS */}
-            <span className="quote_text">{quoteData.text}</span>
+            {isLoading ? (
+              <div className="quote_skeleton_block">
+                <div className="skeleton skeleton-line long" />
+                <div className="skeleton skeleton-line" />
+                <div className="skeleton skeleton-line" />
+                <div className="skeleton skeleton-line short" />
+              </div>
+            ) : (
+              <span className="quote_text">{text}</span>
+            )}
           </div>
 
+          {/* Author area */}
           <div className="author_frame">
-            <img src={avatarSrc} className="author_photo" alt={authorName} />
-            {/* ellipsis + tooltip on hover */}
-            <span className="author_name" title={authorName}>
-              {authorName}
-            </span>
+            {isLoading ? (
+              <>
+                <div className="skeleton skeleton-avatar" />
+                <div className="skeleton skeleton-author-text" />
+              </>
+            ) : (
+              <>
+                <img src={avatarSrc} className="author_photo" alt={authorName} />
+                <span className="author_name" title={authorName}>
+                  {authorName}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="right_button" onClick={onNext} style={{ cursor: "pointer" }}>
+      <div className="right_button" onClick={onNext} style={{ cursor: 'pointer' }}>
         <FontAwesomeIcon icon={faChevronRight} size="3x" />
       </div>
     </div>

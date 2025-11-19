@@ -32,6 +32,86 @@
   object-fit: cover;
 }
 
+.quote_skeleton_block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e5e5e5;
+  border-radius: 999px;
+}
+
+.skeleton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* pill where genre text appears */
+.skeleton-pill {
+  width: 90px;
+  height: 27px;
+}
+
+/* quote lines */
+.skeleton-line {
+  height: 18px;
+  border-radius: 8px;
+}
+
+.skeleton-line.long {
+  width: 90%;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+/* avatar circle */
+.skeleton-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* author text bar */
+.skeleton-author-text {
+  width: 140px;
+  height: 18px;
+  border-radius: 8px;
+}
+
+/* ensure text styling still applies when loaded */
+.quote_text {
+  color: #000;
+  font-family: 'Gentium Book Plus';
+  font-size: 27px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 35px;
+  text-align: left;
+}
+
   
 .card_content {
     display: flex;
