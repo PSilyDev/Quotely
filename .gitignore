@@ -1,17 +1,23 @@
-# Ignore virtual environment  
-venv/  
-.venv/  
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+.venv/
+env/
+venv/
 
-# Ignore Python cache files  
-__pycache__/  
-*.pyc  
-*.pyo  
+# Django
+staticfiles/
+media/
 
-# Ignore environment variables  
+# Node / Vite
+node_modules/
+dist/
+.vite/
+
+# Env
 .env
-/backend/.env
-/backend_v2/.env
+*.env
 
-# Ignore system files  
-.DS_Store  
-Thumbs.db  
+# OS
+.DS_Store
