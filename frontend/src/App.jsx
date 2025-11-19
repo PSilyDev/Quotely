@@ -6,6 +6,10 @@ import SearchBox from "./components/SearchBox";
 import Card from "./components/Card";
 import Search from "./Search";
 
+// 🔹 Base URL for the API
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+
 function App() {
   const [quoteData, setQuoteData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,7 +18,7 @@ function App() {
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/quotes/", {
+        const response = await fetch(`${API_BASE}/api/quotes/`, {
           method: "GET",
           credentials: "include",
         });
@@ -35,7 +39,7 @@ function App() {
     if (quoteData.length === 0) {
       fetchQuotes();
     }
-  }, []); // we only need to run this once on mount
+  }, []); // only once on mount
 
   const handleNextQuote = () => {
     if (quoteData.length === 0) return;
@@ -71,7 +75,6 @@ function App() {
                 </div>
               </div>
 
-              {/* ✅ Render Card only when we actually have a quote */}
               <Card
                 quoteData={currentQuote}
                 onNext={handleNextQuote}
